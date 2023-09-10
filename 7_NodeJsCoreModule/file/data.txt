@@ -1,0 +1,1 @@
+Write Text Synchronously, we can't write directory
