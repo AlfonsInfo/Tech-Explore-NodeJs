@@ -1,3 +1,4 @@
+const yargs = require('yargs');
 const {askingQuestion,saveContact, createFileIfDoesntExist,createFolderIfDoesntExist} =  require('./contact')
 
 
@@ -18,10 +19,44 @@ const {askingQuestion,saveContact, createFileIfDoesntExist,createFolderIfDoesntE
 
 
     const mainGetAnswerFromArgs = () => {
-        // console.log(process)
-        console.log(process.argv)
+        
+        createFolderIfDoesntExist();
+        createFileIfDoesntExist();
+
+        yargs.command({
+            command : "add",
+            describe : "Add New Contact",
+            builder : {
+                nama : {
+                    describe : "Nama Lengkap",
+                    demandOption : true,
+                    type : 'string'
+                },
+                email: {
+                    describe : "Email",
+                    demandOption : false,
+                    type : 'string'
+                },
+                contact: {
+                    describe : "Nomor Telepon",
+                    demandOption : true,
+                    type : 'string'
+                },
+            },
+            handler(argv){
+                const contact = {
+                    nama : argv.nama,
+                    email : argv.email,
+                    contact : argv.contact
+                };
+                saveContact(contact)
+            }
+        });
+
+        yargs.parse();
     }
 
+    // mainGetAnswerFromReply();
     mainGetAnswerFromArgs();
 
 
